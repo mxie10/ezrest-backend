@@ -10,3 +10,5 @@ router.post('/login', AuthController.login);
 router.get('/getUser',  passport.authenticate("jwt", { session: false }), AuthController.getUser);
 
 module.exports = router;
+
+//test
