@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+    unique: true,
     required: true,
   },
   email: {
@@ -21,10 +22,15 @@ const userSchema = new mongoose.Schema({
   profile: {
     type: String,
     trim: true,
+    default: '',
+    required: false,
+    unique:false
   },
   favoriteItems: {
     type: Array,
-    required: true,
+    default: [],
+    required: false,
+    unique:false
   },
 }, {
   timestamps: true,
