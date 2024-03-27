@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 // Listing Schema
 const ListingSchema = new mongoose.Schema({
     title: String,
+    type:String,
     basicInformation: {
         livingroom: Number,
         Kitchen: Number,
