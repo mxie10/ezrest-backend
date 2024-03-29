@@ -8,7 +8,7 @@ const generateToken = require('../utils/generateToken');
 exports.register = asyncHandler(async (req, res, next) => {
 
   console.log("Register user : Post-->")
-  const { username, email, password, profile, favoriteItems } = req.body;
+  const { username, email, password, profile } = req.body;
 
   console.log('req.body:', req.body);
 
@@ -34,7 +34,6 @@ exports.register = asyncHandler(async (req, res, next) => {
       email,
       password,
       profile,
-      favoriteItems
     });
 
     console.log('user:', user);
@@ -72,6 +71,7 @@ exports.login = asyncHandler(async (req, res) => {
       user: user,
       token: generateToken(user._id),
     });
+    console.log('user:',user);
   }
   else {
     res.status(401);
@@ -92,6 +92,7 @@ exports.getUser = asyncHandler(async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      profile: user.profile
     });
   }
   else {
