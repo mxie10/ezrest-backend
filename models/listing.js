@@ -16,6 +16,7 @@ const ListingSchema = new mongoose.Schema({
     safety: [String],
     description: String,
     cleaning: String,
+    imageSrc:String,
     propertyImg: [String],
     address: {
         addressLine1: String,
