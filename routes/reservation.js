@@ -3,6 +3,7 @@ const router = express.Router();
 const ReservationController = require('../controllers/reservationController');
 const passport = require('passport');
 
-router.get('/:userID', ReservationController.getAllReservationsByUserID);
+router.get('/:userID', ReservationController.getReservationsByUserID);
+router.get('/listings/:listingID', ReservationController.getReservationsByListingID);
 router.post('/',  ReservationController.postReservation);
 module.exports = router;
