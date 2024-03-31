@@ -15,7 +15,7 @@ exports.register = asyncHandler(async (req, res, next) => {
   const emailExists = await User.findOne({ email });
 
   if (emailExists) {
-    res.status(400);
+    res.status(400).json({message:''});
     throw new Error("A user with that email already exists");
   }
 
@@ -24,7 +24,7 @@ exports.register = asyncHandler(async (req, res, next) => {
   console.log('usernameExists:', usernameExists);
 
   if (usernameExists) {
-    res.status(400);
+    res.status(400).json({message:''});
     throw new Error("A user with that username already exists");
   }
 
@@ -35,8 +35,6 @@ exports.register = asyncHandler(async (req, res, next) => {
       password,
       profile,
     });
-
-    console.log('user:', user);
 
     res.status(201).json({
       _id: user._id,

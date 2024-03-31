@@ -6,4 +6,5 @@ const passport = require('passport');
 // router.get('/', passport.authenticate("jwt", { session: false }), ListingController.getListings);
 router.get('/' ,ListingController.getAllListings);
 router.post('/' , ListingController.postListings);
+router.get('/:listingID',ListingController.getListingById)
 module.exports = router;
