@@ -46,3 +46,20 @@ exports.postReservation = asyncHandler(async (req,res) => {
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 });
+
+exports.deleteReservation = asyncHandler(async (req, res) => {
+  try{
+    
+    const reservationID = req.params.reservationID;
+    console.log('reservationID:',reservationID);
+    const reservation = await Reservation.findById(reservationID);
+    if (!reservation) {
+        return res.status(404).json({ message: 'Reservation not found' })
+    }
+    await reservation.remove();
+    res.status(200).json({ success: true });
+  }catch(error){
+    console.log(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});

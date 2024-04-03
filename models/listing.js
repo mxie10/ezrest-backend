@@ -6,9 +6,19 @@ const ListingSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    landlordName: {
-        type: String,
+    landlordID:{
+        type: mongoose.Schema.Types.ObjectId,
         required: false,
+    },
+    landlordName:{
+        firstName:{
+            type: String,
+            required: false,
+        },
+        lastName:{
+            type: String,
+            required: false,
+        }
     },
     type: {
         type: String,
