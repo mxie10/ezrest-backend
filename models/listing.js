@@ -104,6 +104,16 @@ const ListingSchema = new mongoose.Schema({
             required: false,
         },
     },
+    coordinate:{
+        longtitude:{
+            type: String,
+            required: false,
+        },
+        latitude:{
+            type: String,
+            required: false,
+        }
+    },
     weekdayPrice: {
         type: Number,
         required: false,

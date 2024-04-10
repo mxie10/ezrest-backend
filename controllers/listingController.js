@@ -12,13 +12,12 @@ exports.getAllListings = asyncHandler(async (req, res) => {
       const listings = await Listing.find().limit(20).skip((pageNumber - 1) * 20) .exec();
       res.status(200).json({ success: true, data: listings });
     } else {
-      // if (filterOptions.location !== '') {
-      //   query.$or = [
-      //     { 'address.city': filterOptions.location },
-      //     { 'address.state': filterOptions.location },
-      //     { 'address.addressLine1': filterOptions.location }
-      //   ];
-      // }
+      if (filterOptions.location !== '') {
+        query.$or = [
+          { 'address.city': filterOptions.location },
+          { 'address.postal': filterOptions.location },
+        ];
+      };
       // if (filterOptions.province) {
       //   query['address.state'] = filterOptions.province;
       // }
@@ -67,4 +66,30 @@ exports.getListingById = asyncHandler(async (req, res) => {
     console.log(error);
   }
 });
+
+exports.updateAvailableDate = asyncHandler(async (req, res) => {
+  try {
+    const listingID = req.params.listingID;
+    const { availableDate } = req.body;
+
+    console.log('listingID is:',listingID);
+    console.log('availableDate is:',availableDate);
+
+    const updatedListing = await Listing.findOneAndUpdate(
+      { _id: listingID },
+      { $set: { availableDate: availableDate } }, 
+      { new: true } 
+    );
+
+    if (!updatedListing) {
+      return res.status(404).json({ success: false, message: 'Listing not found' });
+    }
+
+    res.status(200).json({ success: true, data: updatedListing });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
 
