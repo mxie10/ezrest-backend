@@ -19,15 +19,6 @@ exports.getReservationsByUserID = asyncHandler(async (req, res) => {
 
 exports.getReservationsByListingID = asyncHandler(async (req, res) => {
   try{
-    const userID = req.query.userID
-    console.log('userID:',userID);
-    const user = await User.findById(userID);
-    if (!user) {
-        console.log("in?????????????");
-        return res.status(404).json({ message: 'User not found' })
-    }
-    console.log('getReservationsByListingID_userID:',userID);
-    console.log('getReservationsByListingID_listingID:',req.params.listingID);
     const reservations = await Reservation.find({ listingID: req.params.listingID });
     res.status(200).json({ success: true, data: reservations });
   }catch(error){
@@ -49,7 +40,6 @@ exports.postReservation = asyncHandler(async (req,res) => {
 
 exports.deleteReservation = asyncHandler(async (req, res) => {
   try{
-    
     const reservationID = req.params.reservationID;
     console.log('reservationID:',reservationID);
     const reservation = await Reservation.findById(reservationID);

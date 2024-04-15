@@ -4,34 +4,44 @@ const Listing = require("../models/listing");
 exports.getAllListings = asyncHandler(async (req, res) => {
   try {
     const { pageNumber, filterOptions } = req.query;
-    console.log('filterOptions:', filterOptions);
+    // console.log('filterOptions:', filterOptions);
 
     const query = {};
 
     if (filterOptions.apply === 'false') {
-      const listings = await Listing.find().limit(20).skip((pageNumber - 1) * 20) .exec();
+      const listings = await Listing.find().limit(12).skip((pageNumber - 1) * 12) .exec();
       res.status(200).json({ success: true, data: listings });
     } else {
-      if (filterOptions.location !== '') {
+      //location filter option
+      if (filterOptions.location.length) {
         query.$or = [
           { 'address.city': filterOptions.location },
           { 'address.postal': filterOptions.location },
         ];
       };
-      // if (filterOptions.province) {
-      //   query['address.state'] = filterOptions.province;
-      // }
-      if (filterOptions.price) {
-        console.log('in price?', filterOptions.price);
+      //date filter option
+      if (filterOptions.checkinDate.length) {
+        query['availableDate'] = {
+          $gte: filterOptions.checkinDate
+        };
+      };
+      //province filter option
+      if (filterOptions.province !== '') {
+        query['address.state'] = filterOptions.province;
+      }
+      //price filter option
+      if (filterOptions.price.max !== '0') {
         query['weekdayPrice'] = {
           $gte: parseInt(filterOptions.price.min),
           $lte: parseInt(filterOptions.price.max)
         };
       }
+      //bedrooms filter option
       if (filterOptions.bedrooms !== '0') {
         query['basicInformation.bedroom'] = parseInt(filterOptions.bedrooms);
       }
-      if (filterOptions.category !== '') {
+      //category filter option
+      if (filterOptions.category.length !== 0) {
         query['type'] = filterOptions.category;
       }
       const listings = await Listing.find(query)
@@ -39,7 +49,7 @@ exports.getAllListings = asyncHandler(async (req, res) => {
         .skip((pageNumber - 1) * 20) 
         .exec();
 
-      console.log('listings:',listings);
+      // console.log('listings:',listings);
       res.status(200).json({ success: true, data: listings });
     }
   } catch (error) {

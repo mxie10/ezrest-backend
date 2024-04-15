@@ -8,9 +8,7 @@ const generateToken = require('../utils/generateToken');
 exports.register = asyncHandler(async (req, res, next) => {
 
   console.log("Register user : Post-->")
-  const { username, email, password, profile } = req.body;
-
-  console.log('req.body:', req.body);
+  const { username, email, password, profile, favoriteItems } = req.body;
 
   const emailExists = await User.findOne({ email });
 
@@ -34,6 +32,7 @@ exports.register = asyncHandler(async (req, res, next) => {
       email,
       password,
       profile,
+      favoriteItems
     });
 
     res.status(201).json({
@@ -41,6 +40,7 @@ exports.register = asyncHandler(async (req, res, next) => {
       username: user.username,
       email: user.email,
       role: user.role,
+      favoriteItems: user.favoriteItems
     });
   } catch (e) {
     console.log('error is:', e);
@@ -64,6 +64,7 @@ exports.login = asyncHandler(async (req, res) => {
   const user = await User.findOne({ username });
 
   if (user && (await user.matchPassword(password))) {
+    // console.log('user:',user);
     res.status(200);
     res.json({
       user: user,
@@ -90,7 +91,8 @@ exports.getUser = asyncHandler(async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
-      profile: user.profile
+      profile: user.profile,
+      favoriteItems: user.favoriteItems
     });
   }
   else {
