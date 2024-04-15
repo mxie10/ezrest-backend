@@ -23,7 +23,6 @@ exports.getWishList = asyncHandler(async (req, res) => {
 
 exports.postWishList = asyncHandler(async (req, res) => {
     try {
-        console.log('req.body:', req.body);
         const newWishList = new WishList(req.body);
         const savedWishList = await newWishList.save();
         res.status(201).json({ success: true, data: savedWishList });
