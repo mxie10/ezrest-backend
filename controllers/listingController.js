@@ -4,7 +4,7 @@ const Listing = require("../models/listing");
 exports.getAllListings = asyncHandler(async (req, res) => {
   try {
     const { pageNumber, filterOptions } = req.query;
-    // console.log('filterOptions:', filterOptions);
+    console.log('filterOptions:', filterOptions);
 
     const query = {};
 
@@ -38,15 +38,15 @@ exports.getAllListings = asyncHandler(async (req, res) => {
       }
       //bedrooms filter option
       if (filterOptions.bedrooms !== '0') {
-        query['basicInformation.bedroom'] = parseInt(filterOptions.bedrooms);
+        query['basicInformation.bedroom'] = filterOptions.bedrooms;
       }
       //category filter option
       if (filterOptions.category.length !== 0) {
         query['type'] = filterOptions.category;
       }
       const listings = await Listing.find(query)
-        .limit(20) 
-        .skip((pageNumber - 1) * 20) 
+        .limit(12) 
+        .skip((pageNumber - 1) * 12) 
         .exec();
 
       // console.log('listings:',listings);
