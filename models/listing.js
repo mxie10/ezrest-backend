@@ -26,23 +26,23 @@ const ListingSchema = new mongoose.Schema({
     },
     basicInformation: {
         livingroom: {
-            type: Number,
+            type: String,
             required: false,
         },
         kitchen: {
-            type: Number,
+            type: String,
             required: false,
         },
         bathroom: {
-            type: Number,
+            type: String,
             required: false,
         },
         bedroom: {
-            type: Number,
+            type: String,
             required: false,
         },
         guests: {
-            type: Number,
+            type: String,
             required: false,
         },
     },
